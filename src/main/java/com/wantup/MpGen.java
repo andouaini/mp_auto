@@ -10,6 +10,9 @@ import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
 import javax.sql.DataSource;
+import javax.swing.filechooser.FileSystemView;
+import java.io.File;
+
 /**
  * @author 赵洛伟
  * @since 2019-06-04
@@ -25,12 +28,19 @@ public class MpGen {
      * @param args
      */
     public static void main(String[] args) {
+        //获取桌面路径
+        File desktopDir = FileSystemView.getFileSystemView() .getHomeDirectory();
+        String desktopPath = desktopDir.getAbsolutePath();
+        System.out.println(desktopPath);
+
+
         //1. 全局配置
         GlobalConfig globalConfig = new GlobalConfig();
         globalConfig.setActiveRecord(true)//是否支持ar 模式 会继承一个model
                 .setAuthor("赵洛伟")//设置作者
                 .setIdType(IdType.AUTO)//设置id类型 主键自增
-                .setOutputDir("C:\\Users\\10334\\Desktop\\mp")//指定生成路径
+                //.setOutputDir("C:\\Users\\10334\\Desktop\\mp")//指定生成路径
+                .setOutputDir(desktopPath+"/mp")//指定生成路径
                 .setFileOverride(true)//多次生成文件覆盖
                 .setBaseResultMap(true)//基本的SQL映射
                 .setBaseColumnList(true);//生成基本的SQL片段
@@ -42,7 +52,7 @@ public class MpGen {
                 .setDriverName("com.mysql.jdbc.Driver")
                 .setUrl("jdbc:mysql://localhost:3306/shop")
                 .setUsername("root")
-                .setPassword("123456");
+                .setPassword("123");
 
         //3. 策略配置
         StrategyConfig strategyConfig = new StrategyConfig();
@@ -51,7 +61,7 @@ public class MpGen {
                 .setNaming(NamingStrategy.underline_to_camel)//下划线转驼峰式命名
                 .setColumnNaming(NamingStrategy.underline_to_camel)
                 //.setTablePrefix("tbl_")//设置表名前缀
-                .setInclude("tbl_user")//设置映射的表
+                .setInclude("tbl_orderifno","tbl_miaoshagoods","tbl_miaosha_order","tbl_goods")//设置映射的表
                 .setEntityLombokModel(true)//lombok配置
                 .setEntityColumnConstant(true);//字段常量映射
                 //.setEntityBuilderModel(true);
